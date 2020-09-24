@@ -15,7 +15,11 @@ class CreateRelationshipsTable extends Migration
     {
         Schema::create('relationships', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('followed_id');
+            $table->unsignedBigInteger('follower_id');
             $table->timestamps();
+            $table->foreign('followed_id')->references('id')->on('users');
+            $table->foreign('follower_id')->references('id')->on('users');
         });
     }
 

@@ -20,6 +20,16 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'country',
+        'gender',
+        'number',
+        'username',
+        'birth_date',
+        'institution_type',
+        'institution_name'
+        'department',
+        'faculty',
+        'education_level'
     ];
 
     /**
@@ -40,4 +50,22 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    
+    public function user_profile()
+    {
+        return $this->hasOne('App\Models\User_Profile');
+    }
+
+    public function followers()
+    {
+        return $this->hasMany_and_belongsTo('App\Models\User', 'App\Models\Relationship', 'followed_id', 'follower_id');
+    }
+     
+    public function following()
+    {
+        return $this->hasMany_and_belongsTo('App\Models\User', 'App\Models\Relationship', 'follower_id', 'followed_id');
+    }
+
+
+     
 }
