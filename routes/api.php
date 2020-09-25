@@ -17,11 +17,11 @@ use Illuminate\Support\Facades\Route;
 /*Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });*/
-Routh::apiResources([
+Route::apiResources([
 		'users'=>'UserController',
 		'user_profiles'=>'User_ProfileController',
 		'categories'=>'CategoryController',
 		'subjects'=>'SubjectController',
 		'skills'=>'SkillController',
-		'interests'=>'InterestController'
-])
+		'interests'=>'InterestController',
+	]);
