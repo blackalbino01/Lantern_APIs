@@ -15,14 +15,20 @@ class CategoryTableSeeder extends Seeder
      */
     public function run()
     {
-      
-        
+    	Category::create([
+    		'id' => '1',
+    		'name' => 'interests'
+    	]);
 
-       
-        for ($i = 0; $i < 10; $i++) {
-            Category::create([
-                'name' => Str::random(10)
-            ]);
-        }
+    	Category::create([
+    		'id' => '2',
+    		'name' => 'skills'
+    	]);
+
+    	Category::create([
+    		'id' => '3',
+    		'name' => 'subjects'
+    	]);
+        
     }
 }

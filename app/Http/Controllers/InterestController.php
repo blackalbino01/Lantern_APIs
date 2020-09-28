@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Interest;
+use App\Models\Category;
 
 class InterestController extends Controller
 {
@@ -14,7 +15,9 @@ class InterestController extends Controller
      */
     public function index()
     {
-        //
+        $interests = Interest::all();
+
+        return Response()->json($interests);
     }
 
     /**
@@ -33,9 +36,14 @@ class InterestController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,Category $category)
     {
-        //
+        $interest = $category->interests()->create($request->all());
+
+        return Response()->json([
+            'message' => 'Interest successfully updated',
+            'data' => $interest
+        ]);
     }
 
     /**
@@ -46,7 +54,9 @@ class InterestController extends Controller
      */
     public function show($id)
     {
-        //
+        $interest = Interest::findorfail($id);
+
+        return Response()->json($interest);
     }
 
     /**
@@ -69,7 +79,14 @@ class InterestController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $interest = Interest::findorfail($id);
+
+        $interest->update($request->all());
+
+        return Response()->json([
+            'message' => 'Interest successfully updated',
+            'updated' => $interest
+        ]);
     }
 
     /**
@@ -80,6 +97,14 @@ class InterestController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $interest = Interest::findorfail($id);
+
+        $interest->delete();
+
+        return Response()->json([
+            'message' => 'Interest successfully updated',
+            'data' => $interest
+        ]);
+
     }
 }

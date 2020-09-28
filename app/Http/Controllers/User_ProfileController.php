@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User_Profile;
+use App\Models\User;
+use App\Models\Relationship;
+use Illuminate\Support\Facades\Auth;
 
 class User_ProfileController extends Controller
 {
@@ -13,7 +17,7 @@ class User_ProfileController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -34,7 +38,13 @@ class User_ProfileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = Auth::user();
+
+        $user_profile = $user->user_profile()->create([
+            'profile__picture' => $request->profile__picture,
+        ]);
+
+        return Response()->json($user_profile); 
     }
 
     /**
@@ -43,9 +53,18 @@ class User_ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, User $user, User_Profile $profile)
     {
-        //
+        $user_profile = $user->find($id)->user_profile;
+        $user_profile->user;
+        $follower = $user->find($id)->followers;
+        $following = $user->find($id)->following;
+
+        return Response()->json([
+            'data' => $user_profile,
+            'follower' => $follower,
+            'following' => $following
+        ]);
     }
 
     /**
@@ -68,7 +87,16 @@ class User_ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = Auth::user();
+
+        $user_profile = $user->find($id)->user_profile;
+        $user_profile->user;
+        $user_profile->update($request->all());
+
+        return Response()->json([
+            'message' => 'User successfully updated',
+            'updated' => $user_profile
+        ]);
     }
 
     /**
@@ -79,6 +107,13 @@ class User_ProfileController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = Auth::user();
+        $user_profile = $user->find($id)->user_profile;
+        $user_profile->user;
+        $user_profile->delete();
+
+        return Response()->json([
+            'message' => 'User profile successfully deleted!!', 200
+        ]);
     }
 }

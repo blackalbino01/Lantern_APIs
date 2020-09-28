@@ -14,9 +14,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories= App\Models\Category::all();
+        $categories= Category::all();
 
-        return Response()->json($categories)
+         return Response()->json($categories);
+
     }
 
     /**
@@ -37,7 +38,9 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $category = Category::create($request->all());
+
+        return Response()->json($category);
     }
 
     /**
@@ -48,7 +51,9 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $category = Category::findorfail($id);
+
+        return Response()->json($category);
     }
 
     /**
@@ -71,7 +76,12 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $category = Category::findorfail($id);
+
+        $category->update($request->all());
+
+        return Response()->json($category);
+
     }
 
     /**
@@ -82,6 +92,11 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category = Category::findorfail($id);
+
+        $category->delete();
+
+        return Response()->json($category);
+
     }
 }

@@ -6,8 +6,9 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
 
@@ -26,7 +27,7 @@ class User extends Authenticatable
         'username',
         'birth_date',
         'institution_type',
-        'institution_name'
+        'institution_name',
         'department',
         'faculty',
         'education_level'
@@ -50,6 +51,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function getJWTIdentifier()
+    {
+      return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+      return [];
+    }
     
     public function user_profile()
     {
@@ -58,12 +70,12 @@ class User extends Authenticatable
 
     public function followers()
     {
-        return $this->hasMany_and_belongsTo('App\Models\User', 'App\Models\Relationship', 'followed_id', 'follower_id');
+        return $this->belongsToMany('App\Models\User', 'relationships', 'followed_id', 'follower_id');
     }
      
     public function following()
     {
-        return $this->hasMany_and_belongsTo('App\Models\User', 'App\Models\Relationship', 'follower_id', 'followed_id');
+        return $this->belongsToMany('App\Models\User', 'relationships', 'follower_id', 'followed_id');
     }
 
 

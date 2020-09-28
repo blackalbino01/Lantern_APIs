@@ -9,6 +9,8 @@ class Skill extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name','description'];
+
     public function category()
     {
         return $this->belongsTo('App\Models\Category');

@@ -14,13 +14,25 @@ class SubjectTableSeeder extends Seeder
      */
     public function run()
     {
-        $faker = \Faker\Factory::create();
 
-   
-        for ($i = 0; $i < 10; $i++) {
-            Subject::create([
-                'name' => $faker->company
+    	Subject::create([
+    		'name' => 'science',
+    		'category_id' => 3
             ]);
-        }
+
+    	Subject::create([
+    		'name' => 'art',
+    		'category_id' => 3
+            ]);
+
+    	Subject::create([
+    		'name' => 'commerce',
+    		'category_id' => 3
+            ]);
+
+    	Subject::create([
+    		'name' => 'tech',
+    		'category_id' => 3
+            ]);
     }
 }

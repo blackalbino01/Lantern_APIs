@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Subject;
+use App\Models\Category;
 
 class SubjectController extends Controller
 {
@@ -14,7 +15,9 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        //
+        $subjects = Subject::all();
+
+        return Response()->json($subjects);
     }
 
     /**
@@ -33,9 +36,14 @@ class SubjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Category $category)
     {
-        //
+        $subject = $category->subjects()->create($request->all());
+
+        return Response()->json([
+            'message' => 'Subject successfully updated',
+            'data' => $subject
+        ]);
     }
 
     /**
@@ -46,7 +54,9 @@ class SubjectController extends Controller
      */
     public function show($id)
     {
-        //
+        $subject = Subject::findorfail($id);
+
+        return Response()->json($subject);
     }
 
     /**
@@ -69,7 +79,14 @@ class SubjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $subject = Subject::findorfail($id);
+
+        $subject->update($request->all());
+
+        return Response()->json([
+            'message' => 'Subject successfully updated',
+            'updated' => $subject
+        ]);
     }
 
     /**
@@ -80,6 +97,13 @@ class SubjectController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $subject = Subject::findorfail($id);
+
+        $subject->delete();
+
+        return Response()->json([
+            'message' => 'User successfully deleted!',
+            'data' => $user_profile
+        ]);
     }
 }
