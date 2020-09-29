@@ -23,7 +23,10 @@ class Book_StoreFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'author' =>$this->faker->name(),
+            'title' => $this->faker->sentence(),
+            'price' => $this->faker->numberBetween(100, 1000),
+            'category' => $this->faker->word,
         ];
     }
 }

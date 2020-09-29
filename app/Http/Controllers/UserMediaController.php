@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\UserMedia;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class UserMediaController extends Controller
 {
@@ -12,9 +13,9 @@ class UserMediaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(User $user)
     {
-        //
+        return $user->userMedia;
     }
 
     /**
@@ -24,7 +25,7 @@ class UserMediaController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -33,9 +34,14 @@ class UserMediaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, User $user)
     {
-        //
+        $media = new UserMedia($request->all());
+        $user->userMedia()->save($media);
+        return response([
+            'message' => 'Media saved successfully'
+        ], 201);
+
     }
 
     /**
@@ -44,9 +50,13 @@ class UserMediaController extends Controller
      * @param  \App\Models\UserMedia  $userMedia
      * @return \Illuminate\Http\Response
      */
-    public function show(UserMedia $userMedia)
+    public function show(User $user, UserMedia $userMedia)
     {
-        //
+        $media =UserMedia::find($userMedia);
+        $data = $media;
+        return response([
+            "data" => $data
+        ],200);
     }
 
     /**
@@ -69,7 +79,9 @@ class UserMediaController extends Controller
      */
     public function update(Request $request, UserMedia $userMedia)
     {
-        //
+        $userMedia->update($request->all());
+        return response('Media updated successfully', 201);
+
     }
 
     /**
@@ -80,6 +92,7 @@ class UserMediaController extends Controller
      */
     public function destroy(UserMedia $userMedia)
     {
-        //
+        $userMedia->delete();
+        return response('Media deleted', 204);
     }
 }

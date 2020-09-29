@@ -3,6 +3,14 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\User;
+use App\Models\Advertisement;
+use App\Models\UserMedia;
+use App\Models\Book_Store;
+use App\Models\Blog;
+
+
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,6 +21,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+         User::factory(50)->create();
+        //  Advertisement::factory(25)->create();
+         UserMedia::factory(100)->create();
+         Book_Store::factory(100)->create();
+        //  Blog::factory(25)->create();
+
+
     }
 }

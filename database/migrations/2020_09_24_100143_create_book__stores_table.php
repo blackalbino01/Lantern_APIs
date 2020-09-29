@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+
 class CreateBookStoresTable extends Migration
 {
     /**
@@ -14,11 +15,12 @@ class CreateBookStoresTable extends Migration
     public function up()
     {
         Schema::create('book__stores', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->string('author');
             $table->string('title');
             $table->string('price');
             $table->string('category');
+            $table->timestamps();
         });
     }
 

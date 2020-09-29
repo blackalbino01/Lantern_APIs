@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\UserMedia;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -23,7 +24,10 @@ class UserMediaFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'user_id' => function(){
+                return User::all()->random();
+            },
+            'file' => $this->faker->regexify('^\w+.(jpg|png|gif|mp4|svg)$')
         ];
     }
 }

@@ -13,6 +13,6 @@ class AdvertisementSeeder extends Seeder
      */
     public function run()
     {
-        //
+
     }
 }
