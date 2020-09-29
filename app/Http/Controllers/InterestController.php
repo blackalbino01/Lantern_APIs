@@ -38,10 +38,13 @@ class InterestController extends Controller
      */
     public function store(Request $request,Category $category)
     {
-        $interest = $category->interests()->create($request->all());
-
+        $interest = $category->interests()->firstOrcreate([
+            'name' => $request->name,
+            'description' => $request->description,
+            'category_id' => $category->id
+        ]);
         return Response()->json([
-            'message' => 'Interest successfully updated',
+            'message' => 'Interest successfully created',
             'data' => $interest
         ]);
     }
@@ -102,8 +105,7 @@ class InterestController extends Controller
         $interest->delete();
 
         return Response()->json([
-            'message' => 'Interest successfully updated',
-            'data' => $interest
+            'message' => 'Interest successfully updated',200
         ]);
 
     }

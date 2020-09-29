@@ -24,13 +24,21 @@ use App\Http\Controllers\InterestController;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
 Route::apiResources([
 		'categories'=> CategoryController::class,
 		'subjects'=>SubjectController::class,
 		'skills'=>SkillController::class,
 		'interests'=>InterestController::class,
 	]);
-Route::post('addsubject',[SubjectController::class,'store']);
+
+
+Route::post('category/{category}/skill',[SkillController::class,'store']);
+Route::post('category/{category}/subject',[SubjectController::class,'store']);
+Route::post('category/{category}/interest',[InterestController::class,'store']);
+
+
 Route::group([
 	'middleware' => 'api',
 	'prefix' => 'auth'

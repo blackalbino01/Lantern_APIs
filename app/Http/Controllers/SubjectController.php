@@ -38,10 +38,14 @@ class SubjectController extends Controller
      */
     public function store(Request $request, Category $category)
     {
-        $subject = $category->subjects()->create($request->all());
 
+        $subject = $category->subjects()->firstOrcreate([
+            'name' => $request->name,
+            'description' => $request->description,
+            'category_id' => $category->id
+        ]);
         return Response()->json([
-            'message' => 'Subject successfully updated',
+            'message' => 'Subject successfully created',
             'data' => $subject
         ]);
     }
@@ -79,13 +83,14 @@ class SubjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $subject = Subject::findorfail($id);
 
+        $subject = Subject::whereId($id)->firstOrFail();
         $subject->update($request->all());
+        $update = Subject::whereId($id)->firstOrFail();
 
         return Response()->json([
             'message' => 'Subject successfully updated',
-            'updated' => $subject
+            'updated' => $update
         ]);
     }
 
@@ -102,8 +107,7 @@ class SubjectController extends Controller
         $subject->delete();
 
         return Response()->json([
-            'message' => 'User successfully deleted!',
-            'data' => $user_profile
+            'message' => 'Subject successfully deleted!',200
         ]);
     }
 }

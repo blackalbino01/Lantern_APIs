@@ -38,13 +38,13 @@ class SkillController extends Controller
      */
     public function store(Request $request, Category $category)
     {
-        $skill = $category->skills()->create([
+        $skill = $category->skills()->firstOrcreate([
             'name' => $request->name,
             'description' => $request->description,
             'category_id' => $category->id
         ]);
         return Response()->json([
-            'message' => 'Skill successfully updated',
+            'message' => 'Skill successfully created',
             'data' => $skill
         ]);
     }
@@ -105,8 +105,7 @@ class SkillController extends Controller
         $skill->delete();
 
         return Response()->json([
-            'message' => 'Skill successfully deleted!',
-            'data' => $skill
+            'message' => 'Skill successfully deleted!',200
         ]);
 
     }
