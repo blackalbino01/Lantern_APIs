@@ -107,8 +107,8 @@ class User_ProfileController extends Controller
      */
     public function destroy($id)
     {
-        $user = Auth::user();
-        $user_profile = $user->find($id)->user_profile;
+        $user = User::find($id);
+        $user_profile = $user->user_profile;
         $user_profile->user;
         $user_profile->delete();
 

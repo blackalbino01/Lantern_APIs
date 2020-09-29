@@ -84,13 +84,12 @@ class SubjectController extends Controller
     public function update(Request $request, $id)
     {
 
-        $subject = Subject::whereId($id)->firstOrFail();
+        $subject = Subject::find($id);
         $subject->update($request->all());
-        $update = Subject::whereId($id)->firstOrFail();
 
         return Response()->json([
             'message' => 'Subject successfully updated',
-            'updated' => $update
+            'updated' => $subject
         ]);
     }
 

@@ -25,6 +25,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('category/{category}/skill',[SkillController::class,'store']);
+Route::post('category/{category}/subject',[SubjectController::class,'store']);
+Route::post('category/{category}/interest',[InterestController::class,'store']);
+
 
 Route::apiResources([
 		'categories'=> CategoryController::class,
@@ -33,10 +37,6 @@ Route::apiResources([
 		'interests'=>InterestController::class,
 	]);
 
-
-Route::post('category/{category}/skill',[SkillController::class,'store']);
-Route::post('category/{category}/subject',[SubjectController::class,'store']);
-Route::post('category/{category}/interest',[InterestController::class,'store']);
 
 
 Route::group([
