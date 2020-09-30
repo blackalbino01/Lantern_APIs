@@ -82,7 +82,7 @@ class SkillController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $skill = Skill::findorfail($id);
+        $skill = Skill::find($id);
 
         $skill->update($request->all());
 

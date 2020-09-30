@@ -67,6 +67,18 @@ class UserController extends Controller
         return $this->respondWithToken(auth()->refresh());
     }
 
+    public function update(Request $request, $id)
+    {
+        $user = User::find($id);
+
+        $user->update($request->all());
+
+        return Response()->json([
+            'message' => 'User successfully updated',
+            'updated' => $user
+        ]);
+    }
+
     protected function respondWithToken($token)
     {
       return response()->json([

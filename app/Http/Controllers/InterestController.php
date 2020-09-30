@@ -82,7 +82,7 @@ class InterestController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $interest = Interest::findorfail($id);
+        $interest = Interest::find($id);
 
         $interest->update($request->all());
 

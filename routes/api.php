@@ -48,8 +48,9 @@ Route::group([
 	Route::post('register',[UserController::class,'register']);
 	Route::post('logout',[UserController::class,'logout']);
 	Route::post('refresh',[UserController::class,'refresh']);
+	Route::patch('update/{id}',[UserController::class,'update']);
 	Route::get('userprofile/{id}',[User_ProfileController::class,'show']);
 	Route::post('userprofile',[User_ProfileController::class,'store']);
-	Route::put('userprofile/{id}',[User_ProfileController::class,'update']);
+	Route::patch('userprofile/{id}',[User_ProfileController::class,'update']);
 	Route::delete('userprofile/{id}',[User_ProfileController::class,'destroy']);
 });
