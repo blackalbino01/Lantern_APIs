@@ -11,7 +11,7 @@ class UserMedia extends Model
     use HasFactory;
 
     protected $fillable = [
-        'file'
+        'file', 'user_id'
     ];
 
     /**
@@ -19,9 +19,9 @@ class UserMedia extends Model
      * A particular file can belong to many user
      */
 
-    public function users()
+    public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id','id');
     }
 
 }

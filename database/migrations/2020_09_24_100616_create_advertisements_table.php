@@ -14,7 +14,7 @@ class CreateAdvertisementsTable extends Migration
     public function up()
     {
         Schema::create('advertisements', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('images');
             $table->string('video');
             $table->string('event');

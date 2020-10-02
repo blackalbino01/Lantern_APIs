@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book_Store;
 use Illuminate\Http\Request;
+use App\Http\Resources\BookStoreResource;
 
 class BookStoreController extends Controller
 {
@@ -14,18 +15,8 @@ class BookStoreController extends Controller
      */
     public function index()
     {
-        $books = Book_Store::all();
-        return $books;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $books = Book_Store::paginate(20);
+        return BookStoreResource::collection($books);
     }
 
     /**
@@ -38,23 +29,19 @@ class BookStoreController extends Controller
     {
         // Validating User input
 
-        $validatedData = $request->validate($request, [
+        $validatedData = $request->validate([
             'author' => 'required',
             'title' => 'required',
-            'price' => 'required|min:10|max:1999',
+            'price' => 'required|min:1|max:1999',
             'category' => 'required'
-
         ]);
             // Creating new Book
-        $book = new Book_Store;
-        $book->author = $request->input('author');
-        $book->title = $request->input('title');
-        $book->price = $request->input('price');
-        $book->category = $request->input('category');
-        $book->save();
-        }
-
+        $book = Book_Store::create($validatedData);
+        return response([
+            'data' => new BookStoreResource($book)
+        ], 201);
     }
+
 
     /**
      * Display the specified resource.
@@ -62,20 +49,12 @@ class BookStoreController extends Controller
      * @param  \App\Models\Book_Store  $book_Store
      * @return \Illuminate\Http\Response
      */
-    public function show(Book_Store $book_Store, Request $request)
+    public function show($id, Request $request)
     {
-        return $book_Store;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Book_Store  $book_Store
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Book_Store $book_Store,  $id)
-    {
-        //
+        // return new BookStoreResource($book_Store);
+        $book = Book_Store::find($id);
+        return new BookStoreResource($book);
+        // return $book;
     }
 
     /**
@@ -85,11 +64,13 @@ class BookStoreController extends Controller
      * @param  \App\Models\Book_Store  $book_Store
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Book_Store $book_Store)
+    public function update(Request $request, $id)
     {
-        $book_Store->update($request->all());
+        // $book_Store->update($request->all($id));
+        $newBook = Book_Store::find($id);
+        $newBook->update($request->all());
         return response([
-            'message' => 'Updated successfully'
+            'data' => new BookStoreResource($newBook)
         ], 201);
 
     }
@@ -100,9 +81,13 @@ class BookStoreController extends Controller
      * @param  \App\Models\Book_Store  $book_Store
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Book_Store $book_Store)
+    Public function destroy($id)
     {
-        $book_Store->delete();
-        // return response(null, 204);
+        $book = Book_Store::find($id);
+        $book->delete();
+        return response([
+            'message' => 'Book deleted successfully'
+        ], 204);
     }
+
 }

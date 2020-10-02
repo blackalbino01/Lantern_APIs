@@ -15,7 +15,7 @@ class CreateBookStoresTable extends Migration
     public function up()
     {
         Schema::create('book__stores', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('author');
             $table->string('title');
             $table->string('price');

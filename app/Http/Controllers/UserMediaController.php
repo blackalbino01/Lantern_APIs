@@ -5,9 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\UserMedia;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Http\Resources\UserMediaResource;
 
 class UserMediaController extends Controller
 {
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -15,18 +21,10 @@ class UserMediaController extends Controller
      */
     public function index(User $user)
     {
-        return $user->userMedia;
+        // return UserMediaResource::collection($user->userMedia);
+        return UserMediaResource::collection(UserMedia::paginate(5));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -52,23 +50,21 @@ class UserMediaController extends Controller
      */
     public function show(User $user, UserMedia $userMedia)
     {
-        $media =UserMedia::find($userMedia);
+        // $media =User::with('userMedia')->find($user);
+        // $media = UserMedia::with('user')->find($userMedia);
+        // foreach ($media as $userMedia => $userMedia) {
+        //     return $userMedia;
+        // }
+        // $media = $user->userMedia()->findOrfail($userMedia);
+        $media = UserMedia::find($userMedia->id);
+        $media->$user;
         $data = $media;
+        // dd($data);
         return response([
             "data" => $data
         ],200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\UserMedia  $userMedia
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(UserMedia $userMedia)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.

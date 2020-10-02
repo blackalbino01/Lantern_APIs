@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserMediaController;
+use App\Http\Controllers\BookStoreController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,9 +25,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     you can view all endpoints using the <php artisan route:list> artisan command
 */
 
-Route::group(['prefix' => 'users'], function () {
-    Route::apiResource('/{user}/media', 'UserMediaController');
-});
-Route::apiResource('books', 'BookStoreController');
+Route::apiResource('media', UserMediaController::class);
+// ->middleware('auth:api');
+Route::apiResource('books', BookStoreController::class);
 
 // Route::get('user_media', [UserMediaController::class, 'index']);
