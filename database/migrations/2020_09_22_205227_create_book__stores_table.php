@@ -16,10 +16,13 @@ class CreateBookStoresTable extends Migration
     {
         Schema::create('book__stores', function (Blueprint $table) {
             $table->id();
+<<<<<<< HEAD:database/migrations/2020_09_24_100143_create_book__stores_table.php
             $table->string('author');
             $table->string('title');
             $table->string('price');
             $table->string('category');
+=======
+>>>>>>> a7bb5b7d277852773c04dda01742fe1be0425f06:database/migrations/2020_09_22_205227_create_book__stores_table.php
             $table->timestamps();
         });
     }

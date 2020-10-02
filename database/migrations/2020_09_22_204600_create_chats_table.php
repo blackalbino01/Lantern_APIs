@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserMediaTable extends Migration
+class CreateChatsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class CreateUserMediaTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_media', function (Blueprint $table) {
+        Schema::create('chats', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('file');
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ class CreateUserMediaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_media');
+        Schema::dropIfExists('chats');
     }
 }
