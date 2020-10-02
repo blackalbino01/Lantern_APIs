@@ -50,5 +50,7 @@ Route::group([
 	Route::delete('userprofile/{id}',[User_ProfileController::class,'destroy']);
 });
 
-Route::apiResources('books', BookStoreController::class);
-Route::apiResources('media', UserMediaController::class);
+Route::apiResource('media', UserMediaController::class);
+// ->middleware('auth:api');
+Route::apiResource('books', BookStoreController::class);
+
