@@ -15,13 +15,7 @@ class CreateCategoriesTable extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-<<<<<<< HEAD:database/migrations/2020_09_23_161354_create_blogs_table.php
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('title');
-            $table->text('body');
-=======
             $table->string('name')->nullable();
->>>>>>> a7bb5b7d277852773c04dda01742fe1be0425f06:database/migrations/2020_09_22_203648_create_categories_table.php
             $table->timestamps();
         });
     }
