@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class User_Media extends Model
 {
     use HasFactory;
+
+    // protected $table = 'lantern_api.user.user__media';
+
+    protected $fillable = [
+        'user_id','file'
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
 }

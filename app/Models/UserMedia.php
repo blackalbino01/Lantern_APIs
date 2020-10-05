@@ -11,7 +11,7 @@ class UserMedia extends Model
     use HasFactory;
 
     protected $fillable = [
-        'file', 'user_id'
+        'file'
     ];
 
     /**

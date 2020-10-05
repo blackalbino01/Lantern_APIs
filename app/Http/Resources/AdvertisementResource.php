@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserMediaResource extends JsonResource
+class AdvertisementResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,10 +16,9 @@ class UserMediaResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user_id' => $this->user_id,
-            'file' => $this->file,
-            'created_at' => $this->created_at->toDateTimeString()
+            'imageUrl'=> $this->imageUrl ? $this->imageUrl : 'No image found for this Ad',
+            'videoUrl' => $this->videoUrl ? $this->videoUrl : 'No Video found for this Ad',
+            'advertDescription' => $this->advertDescription
         ];
-        // return parent::toArray($request);
     }
 }

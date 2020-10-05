@@ -4,6 +4,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserMediaController;
 use App\Http\Controllers\BookStoreController;
+use App\Http\Controllers\SkillController;
+use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\InterestController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\User_ProfileController;
+use App\Http\Controllers\AdvertisementController;
+use App\Http\Controllers\BlogController;
+
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -50,7 +62,9 @@ Route::group([
 	Route::delete('userprofile/{id}',[User_ProfileController::class,'destroy']);
 });
 
-Route::apiResource('media', UserMediaController::class);
-// ->middleware('auth:api');
+Route::apiResource('media', UserMediaController::class)->middleware('auth:api');
+Route::apiResource('blogs', BlogController::class);
+
 Route::apiResource('books', BookStoreController::class);
+Route::apiResource('adverts', AdvertisementController::class);
 
