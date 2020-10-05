@@ -6,11 +6,9 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-<<<<<<< HEAD
 use App\Models\UserMedia;
-=======
+use App\Models\Blog;
 use Tymon\JWTAuth\Contracts\JWTSubject;
->>>>>>> a7bb5b7d277852773c04dda01742fe1be0425f06
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -55,13 +53,11 @@ class User extends Authenticatable implements JWTSubject
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-<<<<<<< HEAD
     public function userMedia()
     {
         return $this->hasMany(UserMedia::class);
 
     }
-=======
 
 
     public function getJWTIdentifier()
@@ -73,7 +69,7 @@ class User extends Authenticatable implements JWTSubject
     {
       return [];
     }
-    
+
     public function user_profile()
     {
         return $this->hasOne('App\Models\User_Profile');
@@ -83,13 +79,15 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsToMany('App\Models\User', 'relationships', 'followed_id', 'follower_id');
     }
-     
+
     public function following()
     {
         return $this->belongsToMany('App\Models\User', 'relationships', 'follower_id', 'followed_id');
     }
 
+    public function blogs()
+    {
+        return $this->hasMany(Blog::class);
+    }
 
-     
->>>>>>> a7bb5b7d277852773c04dda01742fe1be0425f06
 }

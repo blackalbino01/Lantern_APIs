@@ -23,9 +23,9 @@ class AdvertisementFactory extends Factory
     public function definition()
     {
         return [
-            'image' => $this->faker->imageUrl($width = 640, $height = 480),
-            'video' => $this->faker->regexify('^\w+.(mp3|mp4)$'),
-            'event' => $this->faker->paragraph($nbSentences = 3, $variableNbSentences = true)
+            'imageUrl' => $this->faker->imageUrl($width = 640, $height = 480),
+            'videoUrl' => $this->faker->regexify('^\w+.(mp3|mp4)$'),
+            'advertDescription' => $this->faker->sentence($nbSentences = 3, $variableNbSentences = true)
         ];
     }
 }

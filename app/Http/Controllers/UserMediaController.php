@@ -6,23 +6,24 @@ use App\Models\UserMedia;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Resources\UserMediaResource;
+use Facade\FlareClient\Http\Response;
+use Illuminate\Support\Facades\Auth;
+
 
 class UserMediaController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-
-    // }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(User $user)
+    public function index()
     {
-        // return UserMediaResource::collection($user->userMedia);
-        return UserMediaResource::collection(UserMedia::paginate(5));
+        $user = Auth::user();
+        $user_media = $user->userMedia()->get();
+        return Response()->json([
+            'data' => $user_media
+        ]) ;
     }
 
 
@@ -32,14 +33,16 @@ class UserMediaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, User $user)
+    public function store(Request $request)
     {
-        $media = new UserMedia($request->all());
-        $user->userMedia()->save($media);
-        return response([
-            'message' => 'Media saved successfully'
-        ], 201);
+        $authenticatedUser  = Auth::user();
+        // Validating User input
 
+        $userMedia = $authenticatedUser->userMedia()->create([
+            'file' => $request->input('file'),
+        ]);
+
+        return Response()->json($userMedia);
     }
 
     /**
@@ -48,21 +51,22 @@ class UserMediaController extends Controller
      * @param  \App\Models\UserMedia  $userMedia
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user, UserMedia $userMedia)
+    public function show($id)
     {
-        // $media =User::with('userMedia')->find($user);
-        // $media = UserMedia::with('user')->find($userMedia);
-        // foreach ($media as $userMedia => $userMedia) {
-        //     return $userMedia;
-        // }
-        // $media = $user->userMedia()->findOrfail($userMedia);
-        $media = UserMedia::find($userMedia->id);
-        $media->$user;
-        $data = $media;
-        // dd($data);
-        return response([
-            "data" => $data
-        ],200);
+        $user = Auth::user();
+        $userMedia = UserMedia::find($id);
+
+        // check for user access
+        if ($user->id !== $userMedia->user_id) {
+            return response([
+                'message' => 'Access denied'
+            ]);
+        };
+
+        return Response()->json([
+            'data' => $userMedia,
+        ]);
+
     }
 
 
@@ -73,11 +77,23 @@ class UserMediaController extends Controller
      * @param  \App\Models\UserMedia  $userMedia
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, UserMedia $userMedia)
+    public function update(Request $request, $id)
     {
-        $userMedia->update($request->all());
-        return response('Media updated successfully', 201);
+        $user = Auth::user();
+        $userMedia = UserMedia::find($id);
 
+        // check for user access
+        if ($user->id !== $userMedia->user_id) {
+            return response([
+                'message' => 'Access denied'
+            ]);
+        } else {
+            $userMedia->update($request->all());
+        };
+        return response([
+            'message' => 'Updated successfully',
+            'data' => $userMedia
+        ]);
     }
 
     /**
@@ -86,9 +102,22 @@ class UserMediaController extends Controller
      * @param  \App\Models\UserMedia  $userMedia
      * @return \Illuminate\Http\Response
      */
-    public function destroy(UserMedia $userMedia)
+    public function destroy($id)
     {
-        $userMedia->delete();
-        return response('Media deleted', 204);
+        $user = Auth::user();
+        $userMedia = UserMedia::find($id);
+
+        // check for user access
+        if ($user->id !== $userMedia->user_id) {
+            return response([
+                'message' => 'Access denied'
+            ]);
+        } else {
+            $userMedia->delete();
+        };
+        return response([
+            'message' => 'Deleted successfully',
+            'data' => null
+        ]);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Advertisement;
 use Illuminate\Http\Request;
+use App\Http\Resources\AdvertisementResource;
 
 class AdvertisementController extends Controller
 {
@@ -14,7 +15,9 @@ class AdvertisementController extends Controller
      */
     public function index()
     {
-        //
+        $advert = Advertisement::paginate(20);
+        return AdvertisementResource::collection($advert);
+
     }
 
     /**
@@ -22,10 +25,6 @@ class AdvertisementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -35,18 +34,29 @@ class AdvertisementController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        // Validating User input
 
+        $validatedData = $request->validate([
+            'imageUrl' => 'nullable',
+            'videoUrl' => 'required',
+            'advertDescription' => 'required'
+        ]);
+            // Creating new Book
+        $advert = Advertisement::create($validatedData);
+        return response([
+            'data' => new AdvertisementResource($advert)
+        ], 201);
+    }
     /**
      * Display the specified resource.
      *
      * @param  \App\Models\Advertisement  $advertisement
      * @return \Illuminate\Http\Response
      */
-    public function show(Advertisement $advertisement)
+    public function show($id)
     {
-        //
+        $advert = Advertisement::find($id);
+        return new AdvertisementResource($advert);
     }
 
     /**
@@ -55,10 +65,7 @@ class AdvertisementController extends Controller
      * @param  \App\Models\Advertisement  $advertisement
      * @return \Illuminate\Http\Response
      */
-    public function edit(Advertisement $advertisement)
-    {
-        //
-    }
+
 
     /**
      * Update the specified resource in storage.
@@ -67,9 +74,13 @@ class AdvertisementController extends Controller
      * @param  \App\Models\Advertisement  $advertisement
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Advertisement $advertisement)
+    public function update(Request $request, $id)
     {
-        //
+        $updateAd = Advertisement::find($id);
+        $updateAd->update($request->all());
+        return response([
+            'data' => new AdvertisementResource($updateAd)
+        ], 201);
     }
 
     /**
@@ -78,8 +89,13 @@ class AdvertisementController extends Controller
      * @param  \App\Models\Advertisement  $advertisement
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Advertisement $advertisement)
+    public function destroy($id)
     {
-        //
+
+        $advert = Advertisement::find($id);
+        $advert->delete();
+        return response([
+            'message' => 'Ad deleted successfully'
+        ], 204);
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserMediaResource extends JsonResource
+class BlogResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,8 +17,10 @@ class UserMediaResource extends JsonResource
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
-            'file' => $this->file,
+            'title' => $this->title,
+            'body' => $this->body,
             'created_at' => $this->created_at->toDateTimeString()
+
         ];
         // return parent::toArray($request);
     }
