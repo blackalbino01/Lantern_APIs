@@ -16,7 +16,6 @@ use App\Http\Controllers\BlogController;
 
 
 
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
