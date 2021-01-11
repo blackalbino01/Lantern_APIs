@@ -32,3 +32,12 @@ class CreateUserMediaTable extends Migration
         Schema::dropIfExists('user_media');
     }
 }
+
+
+
+
+
+
+
+
+

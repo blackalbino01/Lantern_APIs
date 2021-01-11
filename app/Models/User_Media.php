@@ -9,7 +9,7 @@ class User_Media extends Model
 {
     use HasFactory;
 
-    // protected $table = 'lantern_api.user.user__media';
+    // protected $table = 'lantern_api.user.user_media';
 
     protected $fillable = [
         'user_id','file'
