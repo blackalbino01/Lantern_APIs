@@ -6,7 +6,7 @@ use App\Models\Book_Store;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-class BookStoreFactory extends Factory
+class Book_StoreFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

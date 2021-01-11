@@ -95,7 +95,8 @@ class AdvertisementController extends Controller
         $advert = Advertisement::find($id);
         $advert->delete();
         return response([
-            'message' => 'Ad deleted successfully'
-        ], 204);
+            'message' => 'Deleted successfully',
+            'data' => null
+        ]);
     }
 }

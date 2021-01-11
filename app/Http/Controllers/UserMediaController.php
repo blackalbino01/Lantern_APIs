@@ -59,7 +59,7 @@ class UserMediaController extends Controller
         // check for user access
         if ($user->id !== $userMedia->user_id) {
             return response([
-                'message' => 'Access denied'
+                'message' => 'You do not have authorisation to access this media'
             ]);
         };
 
@@ -85,7 +85,7 @@ class UserMediaController extends Controller
         // check for user access
         if ($user->id !== $userMedia->user_id) {
             return response([
-                'message' => 'Access denied'
+                'message' => 'You do not have authorisation to access this media'
             ]);
         } else {
             $userMedia->update($request->all());
@@ -110,7 +110,7 @@ class UserMediaController extends Controller
         // check for user access
         if ($user->id !== $userMedia->user_id) {
             return response([
-                'message' => 'Access denied'
+                'message' => 'You do not have authorisation to access this media'
             ]);
         } else {
             $userMedia->delete();

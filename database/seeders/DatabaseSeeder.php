@@ -21,11 +21,28 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         User::factory(50)->create();
-         Advertisement::factory(100)->create();
-         UserMedia::factory(100)->create();
-         Book_Store::factory(100)->create();
-         Blog::factory(100)->create();
+        $this->call([
+            UsersTableSeeder::class,
+            Users_ProfileTableSeeder::class,
+            BlogSeeder::class,
+            BookStoreSeeder::class,
+            CategoryTableSeeder::class,
+            AdvertisementSeeder::class,
+            InterestTableSeeder::class,
+            RelationshipTableSeeder::class,
+            SkillTableSeeder::class,
+            SubjectTableSeeder::class,
+            UserMediaSeeder::class,
+
+
+
+        ]);
+
+        //  User::factory(50)->create();
+        //  Advertisement::factory(100)->create();
+        //  UserMedia::factory(100)->create();
+        //  Book_Store::factory(100)->create();
+        //  Blog::factory(100)->create();
 
 
     }

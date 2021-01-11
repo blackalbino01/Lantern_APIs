@@ -16,11 +16,13 @@ class RelationshipTableSeeder extends Seeder
     {
         $faker = \Faker\Factory::create();
 
-   
+
         for ($i = 0; $i < 10; $i++) {
             Relationship::create([
-                'follower_id' => $faker->randomElement(\App\Models\User::all()->pluck('id')->toArray()),
-                'followed_id' => $faker->randomElement(\App\Models\User::all()->pluck('id')->toArray())
+                'follower_id' => rand(1, 10),
+                'followed_id' => rand(1, 10)
+                // 'follower_id' => $faker->randomElement(\App\Models\User::all()->pluck('id')->toArray()),
+                // 'followed_id' => $faker->randomElement(\App\Models\User::all()->pluck('id')->toArray())
             ]);
         }
     }

@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-
+use App\Models\User_Media;
 class UserMediaSeeder extends Seeder
 {
     /**
@@ -13,6 +13,11 @@ class UserMediaSeeder extends Seeder
      */
     public function run()
     {
-        //
+        for ($i = 0; $i < 50; $i++) {
+            User_Media::create([
+                'user_id' => rand(1, 10),
+                'file' => 'https://placeimg.com/400/300/any?'.rand(20000, 90000),
+                ]);
+        }
     }
 }
