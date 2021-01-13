@@ -56,7 +56,13 @@ class AdvertisementController extends Controller
     public function show($id)
     {
         $advert = Advertisement::find($id);
-        return new AdvertisementResource($advert);
+        if(!$advert || $advert = null) {
+            return response([
+            'message' => 'resource not found'
+        ], 204);
+        } else {
+            return new AdvertisementResource($advert);
+        }
     }
 
     /**

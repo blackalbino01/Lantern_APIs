@@ -53,8 +53,14 @@ class BookStoreController extends Controller
     {
         // return new BookStoreResource($book_Store);
         $book = Book_Store::find($id);
+        // if($book = null) {
+        //     return response([
+        //         'message' => 'resource not found'
+        //     ]);
+        // } else {
+        //     return new BookStoreResource($book);
+        // }
         return new BookStoreResource($book);
-        // return $book;
     }
 
     /**

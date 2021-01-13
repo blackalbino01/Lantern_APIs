@@ -36,8 +36,8 @@ class BlogController extends Controller
     public function store(Request $request)
     {
         $authenticatedUser  = Auth::user();
-        // Validating User input
 
+        // Validating User input
         $blog = $authenticatedUser->blogs()->create([
             'title' => $request->input('title'),
             'body' => $request->input('body'),
