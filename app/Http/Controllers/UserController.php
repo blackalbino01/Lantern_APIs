@@ -81,6 +81,7 @@ class UserController extends Controller
      * description="Login with email, password",
      * operationId="authLogin",
      * tags={"Authentication"},
+     *
      * @OA\RequestBody(
      *    required=true,
      *    description="Pass user credentials",

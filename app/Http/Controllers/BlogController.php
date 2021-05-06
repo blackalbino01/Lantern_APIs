@@ -14,6 +14,28 @@ class BlogController extends Controller
     {
         $this->middleware('auth:api', ['except' => ['index', 'show']]);
     }
+
+    /**
+     * @OA\Get(
+     * path="api/blogs",
+     * summary="Get blog",
+     * description="Get all available blogs",
+     * operationId="blog",
+     * tags={"Blog"},
+     *
+     *
+     * @OA\Response(
+     *    response=200,
+     *    description="Success",
+     *    @OA\JsonContent(
+     *         @OA\Property(property="data", type="object", ref="#/components/schemas/Blog"),
+     *       ),
+     *    ),
+     * )
+     *
+     */
+
+
     /**
      * Display a listing of the resource.
      *
@@ -26,6 +48,44 @@ class BlogController extends Controller
             'data' => BlogResource::collection($blog)
         ]);
     }
+
+/**
+     * @OA\Post(
+     *  path="api/blogs",
+     *  summary="Create a new blog",
+     *  description="The user about to submit a new blog must be authenticated",
+     *  operationId="blog",
+     *  tags={"Blog"},
+     *  security={ {"bearer": {} }},
+     *
+     * @OA\RequestBody(
+     *    required=true,
+     *    description="Pass user credentials",
+     *    @OA\JsonContent(
+     *       required={"title","body"},
+     *       @OA\Property(property="title", type="string", example="Chukwudi"),
+     *       @OA\Property(property="bodt", type="string", example="Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque accusantium consequuntur molestiae voluptates sit quae eum. Dolore quos quaerat recusandae voluptatem fugiat a iusto ducimus mollitia, reprehenderit similique eligendi cumque."),
+     *    ),
+     * ),
+     *
+     * @OA\Response(
+     *     response=201,
+     *     description="Created successfully",
+     * @OA\JsonContent(
+     *       @OA\Property(property="data", type="object", ref="#/components/schemas/Blog"),
+     *       ),
+     *    ),
+     *
+     * @OA\Response(
+     *    response=401,
+     *    description="Returns when user is not authenticated",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="Unauthenticated"),
+     *    ),
+     *  ),
+     *
+     * )
+     */
 
     /**
      * Store a newly created resource in storage.
@@ -49,6 +109,33 @@ class BlogController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *  path="api/blogs/{id}",
+     *  summary="Get a blog by id",
+     *  description="Get a particular blog post by id",
+     *  operationId="blog",
+     *  tags={"Blog"},
+     *
+     * @OA\Response(
+     *     response=200,
+     *     description="Success",
+     * @OA\JsonContent(
+     *       @OA\Property(property="data", type="object", ref="#/components/schemas/Blog"),
+     *       ),
+     *    ),
+     *
+     * @OA\Response(
+     *    response=404,
+     *    description="Returns when resource is not found",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="resource not found"),
+     *    ),
+     *  ),
+     *
+     * )
+     */
+
+    /**
      * Display the specified resource.
      *
      * @param  \App\Models\Blog  $blog
@@ -59,6 +146,56 @@ class BlogController extends Controller
         $blog = Blog::find($id);
         return new BlogResource($blog);
     }
+
+    /**
+     * @OA\Patch(
+     *  path="api/blogs/{id}",
+     *  summary="Update a blog post by its id",
+     *  description="The user about to update a blog must be authenticated",
+     *  operationId="blog",
+     *  tags={"Blog"},
+     *  security={ {"bearer": {} }},
+     *
+     * @OA\RequestBody(
+     *    required=true,
+     *    description="Pass user credentials",
+     *    @OA\JsonContent(
+     *       required={"title","body"},
+     *       @OA\Property(property="title", type="string", example="Chukwudi"),
+     *       @OA\Property(property="bodt", type="string", example="Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque accusantium consequuntur molestiae voluptates sit quae eum. Dolore quos quaerat recusandae voluptatem fugiat a iusto ducimus mollitia, reprehenderit similique eligendi cumque."),
+     *    ),
+     * ),
+     *
+     * @OA\Response(
+     *     response=201,
+     *     description="Updated successfully",
+     * @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="updated successfully"),
+     *       @OA\Property(property="data", type="object", ref="#/components/schemas/Blog"),
+     *       ),
+     *    ),
+     *
+     *  @OA\Response(
+     *    response=403,
+     *    description="Returns when user is not authorized to access a resource he is trying to access",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="Acess denied"),
+     *    ),
+     *  ),
+     *
+     *
+     * @OA\Response(
+     *    response=401,
+     *    description="Returns when user is not authenticated",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="Unauthenticated"),
+     *    ),
+     *  ),
+     *
+     * )
+     *
+     */
+
 
 
     /**
@@ -86,6 +223,46 @@ class BlogController extends Controller
             'data' => $blog
         ]);
     }
+
+    /**
+     * @OA\Delete(
+     *  path="api/blogs/{id}",
+     *  summary="Delete a blog post by its id",
+     *  description="The user about to delete a blog must be authenticated",
+     *  operationId="blog",
+     *  tags={"Blog"},
+     *  security={ {"bearer": {} }},
+     *
+     *
+     * @OA\Response(
+     *     response=200,
+     *     description="Success",
+     * @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="Deleted successfully"),
+     *       @OA\Property(property="data", type="null"),
+     *       ),
+     *    ),
+     *
+     *  @OA\Response(
+     *    response=403,
+     *    description="Returns when user is not authorized to access a resource",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="Acess denied"),
+     *    ),
+     *  ),
+     *
+     *
+     * @OA\Response(
+     *    response=401,
+     *    description="Returns when user is not authenticated",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="Unauthenticated"),
+     *    ),
+     *  ),
+     *
+     * )
+     *
+     */
 
     /**
      * Remove the specified resource from storage.
