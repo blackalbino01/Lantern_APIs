@@ -31,6 +31,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
 Route::post('category/{category}/skill',[SkillController::class,'store']);
 Route::post('category/{category}/subject',[SubjectController::class,'store']);
 Route::post('category/{category}/interest',[InterestController::class,'store']);
@@ -53,7 +54,9 @@ Route::group([
 	Route::post('login',[UserController::class,'login']);
 	Route::post('register',[UserController::class,'register']);
 	Route::post('logout',[UserController::class,'logout']);
-	Route::post('refresh',[UserController::class,'refresh']);
+    Route::post('refresh',[UserController::class,'refresh']);
+    Route::get('me/{id}',[UserController::class,'me']);
+
 	Route::patch('update/{id}',[UserController::class,'update']);
 	Route::get('userprofile/{id}',[User_ProfileController::class,'show']);
 	Route::post('userprofile',[User_ProfileController::class,'store']);

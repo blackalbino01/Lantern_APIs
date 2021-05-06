@@ -28,8 +28,7 @@ class AdvertisementSeeder extends Seeder
             Advertisement::create([
                 'imageUrl' => 'https://placeimg.com/400/300/any?'.rand(20000, 90000),
                 'videoUrl' =>  "https://www.youtube.com/watch?v=".generateRandomString(),
-                'advertDescription' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, officiis,
-                              dolorem laborum repudiandae inventore'
+                'advertDescription' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, officiis,dolorem laborum repudiandae inventore'
                 ]);
         }
     }

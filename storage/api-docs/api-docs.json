@@ -1,0 +1,1841 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "School System Application API",
+        "description": "API documentation for the Lantern School System Application",
+        "contact": {
+            "email": "danielokoronkwo90@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "api/adverts": {
+            "get": {
+                "tags": [
+                    "Advertisement"
+                ],
+                "summary": "Get adverts",
+                "description": "Get all available adverts",
+                "operationId": "advert",
+                "responses": {
+                    "422": {
+                        "description": "Wrong URL or URL not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "You might have made a mistake in your URL"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/Advertisement"
+                                        },
+                                        "path": {
+                                            "type": "string",
+                                            "readOnly": "true",
+                                            "example": "http://localhost:8000/api/adverts"
+                                        },
+                                        "per_page": {
+                                            "type": "integer",
+                                            "readOnly": "true",
+                                            "example": "20"
+                                        },
+                                        "to": {
+                                            "type": "integer",
+                                            "readOnly": "true",
+                                            "example": "20"
+                                        },
+                                        "total": {
+                                            "type": "integer",
+                                            "readOnly": "true",
+                                            "example": "50"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Advertisement"
+                ],
+                "summary": "Create adverts",
+                "description": "Create a new adverts",
+                "operationId": "advert",
+                "requestBody": {
+                    "description": "Pass data required to set up advert",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "imageUrl",
+                                    "videoUrl",
+                                    "advertDescription"
+                                ],
+                                "properties": {
+                                    "imageUrl": {
+                                        "type": "string",
+                                        "example": "https://picture.com/picture"
+                                    },
+                                    "videoUrl": {
+                                        "type": "string",
+                                        "example": "advertisement.mp4"
+                                    },
+                                    "advertDescription": {
+                                        "type": "string",
+                                        "example": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, esse hic dolores nam iure cum. Unde, ducimus magni amet repudiandae, veniam asperiores, tenetur quibusdam quasi minus hic doloribus laboriosam inventore."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Advert Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/Advertisement"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/adverts/{id}": {
+            "get": {
+                "tags": [
+                    "Advertisement"
+                ],
+                "summary": "Get an advert by id",
+                "description": "Get a particular advert by id",
+                "operationId": "advert",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/Advertisement"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Returns when resource is not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "resource not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Advertisement"
+                ],
+                "summary": "Delete an advert by id",
+                "description": "Delete a particular advert by id",
+                "operationId": "advert",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "readOnly": "true",
+                                            "example": "Delete successfully"
+                                        },
+                                        "data": {
+                                            "type": "null"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Advertisement"
+                ],
+                "summary": "Update an advert by id",
+                "description": "Update a particular advert by id",
+                "operationId": "advert",
+                "requestBody": {
+                    "description": "Pass data required to update advert, all input field must not be specified",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "imageUrl",
+                                    "videoUrl",
+                                    "advertDescription"
+                                ],
+                                "properties": {
+                                    "imageUrl": {
+                                        "type": "string",
+                                        "example": "https://picture.com/picture"
+                                    },
+                                    "videoUrl": {
+                                        "type": "string",
+                                        "example": "advert.mp4"
+                                    },
+                                    "advertDescription": {
+                                        "type": "string",
+                                        "example": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, esse hic dolores nam iure cum. Unde, ducimus magni amet repudiandae, veniam asperiores, tenetur quibusdam quasi minus hic doloribus laboriosam inventore."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "readOnly": "true",
+                                            "example": "51"
+                                        },
+                                        "imageUrl": {
+                                            "type": "string",
+                                            "readOnly": "true",
+                                            "example": "https://picture.com/picture"
+                                        },
+                                        "videoUrl": {
+                                            "type": "string",
+                                            "readOnly": "true",
+                                            "example": "advert.mp4"
+                                        },
+                                        "advertDescription": {
+                                            "type": "string",
+                                            "example": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, officiis,dolorem laborum repudiandae inventore"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/blogs": {
+            "get": {
+                "tags": [
+                    "Blog"
+                ],
+                "summary": "Get blog",
+                "description": "Get all available blogs",
+                "operationId": "blog",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/Blog"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Blog"
+                ],
+                "summary": "Create a new blog",
+                "description": "The user about to submit a new blog must be authenticated",
+                "operationId": "blog",
+                "requestBody": {
+                    "description": "Pass user credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "body"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Chukwudi"
+                                    },
+                                    "bodt": {
+                                        "type": "string",
+                                        "example": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque accusantium consequuntur molestiae voluptates sit quae eum. Dolore quos quaerat recusandae voluptatem fugiat a iusto ducimus mollitia, reprehenderit similique eligendi cumque."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/Blog"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Returns when user is not authenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "api/blogs/{id}": {
+            "get": {
+                "tags": [
+                    "Blog"
+                ],
+                "summary": "Get a blog by id",
+                "description": "Get a particular blog post by id",
+                "operationId": "blog",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/Blog"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Returns when resource is not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "resource not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Blog"
+                ],
+                "summary": "Delete a blog post by its id",
+                "description": "The user about to delete a blog must be authenticated",
+                "operationId": "blog",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Deleted successfully"
+                                        },
+                                        "data": {
+                                            "type": "null"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Returns when user is not authorized to access a resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Acess denied"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Returns when user is not authenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Blog"
+                ],
+                "summary": "Update a blog post by its id",
+                "description": "The user about to update a blog must be authenticated",
+                "operationId": "blog",
+                "requestBody": {
+                    "description": "Pass user credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "body"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Chukwudi"
+                                    },
+                                    "bodt": {
+                                        "type": "string",
+                                        "example": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque accusantium consequuntur molestiae voluptates sit quae eum. Dolore quos quaerat recusandae voluptatem fugiat a iusto ducimus mollitia, reprehenderit similique eligendi cumque."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "updated successfully"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Blog"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Returns when user is not authorized to access a resource he is trying to access",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Acess denied"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Returns when user is not authenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "api/books": {
+            "get": {
+                "tags": [
+                    "Book"
+                ],
+                "summary": "Get books",
+                "description": "Get all available books",
+                "operationId": "books",
+                "responses": {
+                    "422": {
+                        "description": "Wrong URL or URL not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "You might have made a mistake in your URL"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/Book_Store"
+                                        },
+                                        "path": {
+                                            "type": "string",
+                                            "readOnly": "true",
+                                            "example": "http://localhost:8000/api/books"
+                                        },
+                                        "per_page": {
+                                            "type": "integer",
+                                            "readOnly": "true",
+                                            "example": "20"
+                                        },
+                                        "to": {
+                                            "type": "integer",
+                                            "readOnly": "true",
+                                            "example": "20"
+                                        },
+                                        "total": {
+                                            "type": "integer",
+                                            "readOnly": "true",
+                                            "example": "50"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Book"
+                ],
+                "summary": "Store books",
+                "description": "Store a new book",
+                "operationId": "books",
+                "requestBody": {
+                    "description": "Pass data required to set up advert",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "author",
+                                    "title",
+                                    "price",
+                                    "category"
+                                ],
+                                "properties": {
+                                    "author": {
+                                        "type": "string",
+                                        "example": "Reece James"
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Football greatest"
+                                    },
+                                    "price": {
+                                        "type": "string",
+                                        "example": "400"
+                                    },
+                                    "category": {
+                                        "type": "string",
+                                        "example": "fiction"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Book Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/Book_Store"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/books/{id}": {
+            "get": {
+                "tags": [
+                    "Book"
+                ],
+                "summary": "Get a book by id",
+                "description": "Get a particular book by id",
+                "operationId": "book",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/Book_Store"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Returns when resource is not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "resource not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Book"
+                ],
+                "summary": "Delete a book by id",
+                "description": "Delete a particular book by id",
+                "operationId": "book",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "readOnly": "true",
+                                            "example": "Book deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Book"
+                ],
+                "summary": "Update a book by id",
+                "description": "Update a particular book by id",
+                "operationId": "book",
+                "requestBody": {
+                    "description": "Pass data required to update advert, all Input field must not be specified",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "author",
+                                    "title",
+                                    "price",
+                                    "category"
+                                ],
+                                "properties": {
+                                    "author": {
+                                        "type": "string",
+                                        "example": "Reece James"
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Football greatest"
+                                    },
+                                    "price": {
+                                        "type": "string",
+                                        "example": "400"
+                                    },
+                                    "category": {
+                                        "type": "string",
+                                        "example": "fiction"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "readOnly": "true",
+                                            "example": "3"
+                                        },
+                                        "author": {
+                                            "type": "string",
+                                            "readOnly": "true",
+                                            "example": "Reece James"
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "readOnly": "true",
+                                            "example": "Football greatness"
+                                        },
+                                        "price": {
+                                            "type": "string",
+                                            "example": "400"
+                                        },
+                                        "category": {
+                                            "type": "string",
+                                            "readOnly": "true",
+                                            "example": "fiction"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/auth/register": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Sign Up",
+                "description": "Signup with name, email, password",
+                "operationId": "authLogin",
+                "requestBody": {
+                    "description": "Pass user credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "new user's name",
+                                        "type": "string",
+                                        "example": "Hussaini Segun Chibuike"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user1@mail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "PassWord12345"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "404": {
+                        "description": "Wrong URL response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, Url not found check your spelling and try again."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "User created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User successfully registered."
+                                        },
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/auth/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Sign in",
+                "description": "Login with email, password",
+                "operationId": "authLogin",
+                "requestBody": {
+                    "description": "Pass user credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user1@mail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "PassWord12345"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong email address or password. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string",
+                                            "readOnly": "true",
+                                            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTYxODY1OTIyNiwiZXhwIjoxNjE4NjYyODI2LCJuYmYiOjE2MTg2NTkyMjYsImp0aSI6ImltaDdQdG9HZzdoeWRBRjYiLCJzdWIiOjMsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.Lq7IJe-YNvuZjxmp-c-EKQj3RxncW8gpHpSt8dn7mfg"
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "readOnly": "true",
+                                            "example": "bearer"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer",
+                                            "readOnly": "true",
+                                            "example": "3600"
+                                        },
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/auth/me/{id}": {
+            "get": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Get Profile Information by id",
+                "description": "Get currently authenticated user information",
+                "operationId": "authFindUserById",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Returns when user is not authenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "api/auth/logout": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Logout",
+                "description": "Logout currently authenticated user",
+                "operationId": "authLogout",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "'User successfully signed out!!!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Returns when user is not authenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "api/auth/refresh": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Request new token",
+                "description": "Generate new token for the currently authenticated user and invalidate the old token",
+                "operationId": "authrefresh",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string",
+                                            "readOnly": "true",
+                                            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC92MVwvYXV0aFwvbG9naW4iLCJpYXQiOjE2MTYyMzcxMDEsImV4cCI6MTYxNjI0MDcwMSwibmJmIjoxNjE2MjM3MTAxLCJqdGkiOiJrSngzSlRzRGlhT0h1ckNKIiwic3ViIjoyMSwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.pLUchLOEGmIv2Ns120sEZBuJj57YnAJEJuCFsuvXK4A"
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "readOnly": "true",
+                                            "example": "bearer"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer",
+                                            "readOnly": "true",
+                                            "example": "3600"
+                                        },
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Returns when user is not authenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "api/auth/update/{id}": {
+            "patch": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Update by Id",
+                "description": "Currently authenticated user can update their details in the Database",
+                "operationId": "authUpdate",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "'User updated successfully!"
+                                        },
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Returns when user is not authenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "api/media": {
+            "get": {
+                "tags": [
+                    "Media"
+                ],
+                "summary": "Get a user's media file",
+                "description": "Get all media files belonging to a particular user",
+                "operationId": "media",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/UserMedia"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Returns when user is not authenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Media"
+                ],
+                "summary": "Create a new media",
+                "description": "The user about to submit a new media must be authenticated",
+                "operationId": "media",
+                "requestBody": {
+                    "description": "Pass user credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "file"
+                                ],
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "example": "video.mp4"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "readOnly": "true",
+                                            "example": "51"
+                                        },
+                                        "user_id": {
+                                            "type": "integer",
+                                            "readOnly": "true",
+                                            "example": "7"
+                                        },
+                                        "file": {
+                                            "type": "string",
+                                            "readOnly": "true",
+                                            "example": "video.mp4"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "readOnly": "true",
+                                            "example": "2021-04-25 21:10:45"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "readOnly": "true",
+                                            "example": "2021-04-25 21:10:45"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Returns when user is not authenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "api/media/{id}": {
+            "get": {
+                "tags": [
+                    "Media"
+                ],
+                "summary": "Get a media by id",
+                "description": "Get a particular media post by id, the user about to access the specified resource must be authenticated and can only access media belonging to the user",
+                "operationId": "media",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/UserMedia"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Returns when resource is not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "resource not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Returns when resource is being accessed by a another user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "You do not have authorisation to access this media"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Returns when user is not authenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Media"
+                ],
+                "summary": "Delete a media by its id",
+                "description": "The user about to delete a media must be authenticated. This can only be done by the user who initially created the media",
+                "operationId": "media",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "deleted successfully"
+                                        },
+                                        "data": {
+                                            "type": "null"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Returns when user is not authorized to access a resource he is trying to access",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "You do not have authorisation to access this media"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Returns when user is not authenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Media"
+                ],
+                "summary": "Update a media by its id",
+                "description": "The user about to update a blog must be authenticated. This can only be done by the user who initially created the media",
+                "operationId": "media",
+                "requestBody": {
+                    "description": "Pass user credentials, one or all of the specified input can be sent via the request body",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "file"
+                                ],
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "example": "video.mp4"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "updated successfully"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/UserMedia"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Returns when user is not authorized to access a resource he is trying to access",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "You do not have authorisation to access this media"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Returns when user is not authenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Advertisement": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "20"
+                    },
+                    "imageUrl": {
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "https://placeimg.com/400/300/any?86542"
+                    },
+                    "videoUrl": {
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "https://www.youtube.com/watch?v=1O-U_o_rhe_"
+                    },
+                    "advertDescription": {
+                        "type": "string",
+                        "example": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, officiis,dolorem laborum repudiandae inventore"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "data"
+                }
+            },
+            "Blog": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "40"
+                    },
+                    "user_id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "2"
+                    },
+                    "title": {
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "Lorem ipsum dolor sit amet."
+                    },
+                    "body": {
+                        "type": "string",
+                        "example": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis, perspiciatis sed? Hic, sapiente amet! Magnam quas reprehenderit, enim repellendus accusamus debitis voluptatibus a tenetur sequi laudantium amet dicta ratione eos assumenda voluptatum officia et. Assumenda aspernatur magni sint optio! Dignissimos praesentium maxime quod, esse odit iure saepe dolores rem facilis."
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "2019-02-25 12:59:20"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "data"
+                }
+            },
+            "Book_Store": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "3"
+                    },
+                    "author": {
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "Elon Musk"
+                    },
+                    "title": {
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "Lorem ipsum dolor sit amet."
+                    },
+                    "price": {
+                        "type": "string",
+                        "example": "554"
+                    },
+                    "category": {
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "9"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "data"
+                }
+            },
+            "User": {
+                "required": [
+                    "password"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "3"
+                    },
+                    "name": {
+                        "description": "User role",
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "Constantin Littel III"
+                    },
+                    "email": {
+                        "description": "User unique email address",
+                        "type": "string",
+                        "format": "email",
+                        "readOnly": "true",
+                        "example": "vella.bradtke@yahoo.com"
+                    },
+                    "email_verified_at": {
+                        "description": "Datetime marker of verification status",
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": "true",
+                        "example": "2019-02-25 12:59:20"
+                    },
+                    "country": {
+                        "description": "User's country of origin",
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "Isle of Man"
+                    },
+                    "gender": {
+                        "description": "User gender",
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "male"
+                    },
+                    "number": {
+                        "description": "User phone number",
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "1-281-943-3838 x1048"
+                    },
+                    "username": {
+                        "description": "User nickname",
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "oking"
+                    },
+                    "birth_date": {
+                        "description": "User date of birth",
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "1995-09-05"
+                    },
+                    "institution_type": {
+                        "description": "Tertiary Institution type",
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "University"
+                    },
+                    "institution_name": {
+                        "description": "User institution name",
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "University Of Nigeria, Nsukka"
+                    },
+                    "department": {
+                        "description": "User department",
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "Computer Science"
+                    },
+                    "faculty": {
+                        "description": "User Faculty",
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "Physical and Applied science"
+                    },
+                    "education_level": {
+                        "description": "User year of study",
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "Third year"
+                    },
+                    "created_at": {
+                        "description": "date User registered",
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "2019-02-25 12:59:20"
+                    },
+                    "updated_at": {
+                        "description": "last date user updated their profile",
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "2019-02-25 12:59:20"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "user"
+                }
+            },
+            "UserMedia": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    },
+                    "user_id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "7"
+                    },
+                    "file": {
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "https://placeimg.com/400/300/any?31560"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "2021-01-13 21:10:45"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "2021-01-13 21:10:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "data"
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "School System Application API",
+            "description": "API Endpoints of School System Application API"
+        }
+    ],
+    "security": [
+        []
+    ]
+}
