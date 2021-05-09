@@ -4,7 +4,11 @@
         "title": "School System Application API",
         "description": "API documentation for the Lantern School System Application",
         "contact": {
-            "email": "danielokoronkwo90@gmail.com"
+            "email": [
+                "danielokoronkwo90@gmail.com",
+                "hauwal4969@gmail.com",
+            ]
+
         },
         "license": {
             "name": "Apache 2.0",
@@ -1591,6 +1595,245 @@
                     }
                 ]
             }
+        },
+        "api/userprofile": {
+            "post": {
+                "tags": [
+                    "UserProfile"
+                ],
+                "summary": "upload a new profile picture",
+                "description": "The user about to upload a new profile picture must be authenticated",
+                "operationId": "userprofile",
+                "requestBody": {
+                    "description": "Pass user credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "profile__picture"
+                                ],
+                                "properties": {
+                                    "profile__picture": {
+                                        "type": "string",
+                                        "readOnly": "true",
+                                        "example": "https://placeimg.com/400/300/any?31560"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Uploaded successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/User_Profile"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Returns when user is not authenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "api/userprofile/{id}": {
+            "get": {
+                "tags": [
+                    "UserProfile"
+                ],
+                "summary": "Get a user by id",
+                "description": "Get a particular user profile by id",
+                "operationId": "user",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/User_Profile"
+                                        },
+                                        "follower": {
+                                            "$ref": "#/components/schemas/User_Profile"
+                                        },
+                                        "following": {
+                                            "$ref": "#/components/schemas/User_Profile"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Returns when resource is not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "resource not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "UserProfile"
+                ],
+                "summary": "Delete a user profile by its id",
+                "description": "The user about to delete a profile must be authenticated",
+                "operationId": "userprofile",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Deleted successfully"
+                                        },
+                                        "data": {
+                                            "type": "null"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Returns when user is not authorized to access a resource",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Acess denied"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Returns when user is not authenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "UserProfile"
+                ],
+                "summary": "Update by Id",
+                "description": "Currently authenticated user can update their details in the Database",
+                "operationId": "userprofile",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "'Userprofile updated successfully!"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/User_Profile"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Returns when user is not authenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -1679,6 +1922,148 @@
                         "type": "string",
                         "readOnly": "true",
                         "example": "9"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "data"
+                }
+            },
+            "Category": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    },
+                    "name": {
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "Mathematics"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "2021-01-13 21:10:45"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "2021-01-13 21:10:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "data"
+                }
+            },
+            "Interest": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    },
+                    "category_id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "7"
+                    },
+                    "name": {
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "blockchain"
+                    },
+                    "description": {
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis, perspiciatis sed? Hic, sapiente amet! Magnam quas reprehenderit, enim repellendus accusamus debitis voluptatibus a tenetur sequi laudantium amet dicta ratione eos assumenda voluptatum officia et"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "2021-01-13 21:10:45"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "2021-01-13 21:10:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "data"
+                }
+            },
+            "Skill": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    },
+                    "category_id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "7"
+                    },
+                    "name": {
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "Graphics Design"
+                    },
+                    "description": {
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis, perspiciatis sed? Hic, sapiente amet! Magnam quas reprehenderit, enim repellendus accusamus debitis voluptatibus a tenetur sequi laudantium amet dicta ratione eos assumenda voluptatum officia et"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "2021-01-13 21:10:45"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "2021-01-13 21:10:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "data"
+                }
+            },
+            "Subject": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    },
+                    "category_id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "7"
+                    },
+                    "name": {
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "Mathematics"
+                    },
+                    "description": {
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis, perspiciatis sed? Hic, sapiente amet! Magnam quas reprehenderit, enim repellendus accusamus debitis voluptatibus a tenetur sequi laudantium amet dicta ratione eos assumenda voluptatum officia et"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "2021-01-13 21:10:45"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "2021-01-13 21:10:45"
                     }
                 },
                 "type": "object",
@@ -1810,6 +2195,39 @@
                         "type": "string",
                         "readOnly": "true",
                         "example": "https://placeimg.com/400/300/any?31560"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "2021-01-13 21:10:45"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "2021-01-13 21:10:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "data"
+                }
+            },
+            "User_Profile": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    },
+                    "profile__picture": {
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "https://placeimg.com/400/300/any?31560"
+                    },
+                    "user_id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "7"
                     },
                     "created_at": {
                         "type": "string",

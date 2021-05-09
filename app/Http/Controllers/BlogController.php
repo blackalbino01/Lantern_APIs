@@ -64,7 +64,7 @@ class BlogController extends Controller
      *    @OA\JsonContent(
      *       required={"title","body"},
      *       @OA\Property(property="title", type="string", example="Chukwudi"),
-     *       @OA\Property(property="bodt", type="string", example="Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque accusantium consequuntur molestiae voluptates sit quae eum. Dolore quos quaerat recusandae voluptatem fugiat a iusto ducimus mollitia, reprehenderit similique eligendi cumque."),
+     *       @OA\Property(property="body", type="string", example="Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque accusantium consequuntur molestiae voluptates sit quae eum. Dolore quos quaerat recusandae voluptatem fugiat a iusto ducimus mollitia, reprehenderit similique eligendi cumque."),
      *    ),
      * ),
      *

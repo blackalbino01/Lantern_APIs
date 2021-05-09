@@ -8,6 +8,27 @@ use App\Models\Category;
 
 class SkillController extends Controller
 {
+
+    /**
+     * @OA\Get(
+     * path="api/skills",
+     * summary="Get skills",
+     * description="Get all available skills",
+     * operationId="skill",
+     * tags={"Skill"},
+     *
+     *
+     * @OA\Response(
+     *    response=200,
+     *    description="Success",
+     *    @OA\JsonContent(
+     *         @OA\Property(property="data", type="object", ref="#/components/schemas/Skill"),
+     *       ),
+     *    ),
+     * )
+     *
+     */
+
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +38,9 @@ class SkillController extends Controller
     {
         $skills = Skill::all();
 
-        return Response()->json($skills);
+        return Response()->json([
+            'data' => $skills,
+        ]);
     }
 
     /**
@@ -29,6 +52,46 @@ class SkillController extends Controller
     {
         //
     }
+
+    /**
+     * @OA\Post(
+     * path="api/category/{category}/skill",
+     * summary="Store skills",
+     * description="The user about to Store a new skill must be authenticated",
+     * operationId="skill",
+     * tags={"Skill"},
+     * security={ {"bearer": {} }},
+     *
+     * @OA\RequestBody(
+     *    required=true,
+     *    description="Pass data required to set up skill",
+     *    @OA\JsonContent(
+     *       required={"name", "description", category_id"},
+     *       @OA\Property(property="name", type="string", example="Graphics Design"),
+     *       @OA\Property(property="description", type="string", example="Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque accusantium consequuntur molestiae voluptates sit quae eum. Dolore quos quaerat recusandae voluptatem fugiat a iusto ducimus mollitia, reprehenderit similique eligendi cumque."),
+     *       @OA\Property(property="category_id", type="integer", example="4"),
+
+     *    ),
+     * ),
+     *
+     * @OA\Response(
+     *    response=201,
+     *    description="Skill Created",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="Skill successfully Created."),
+     *       @OA\Property(property="data", type="object", ref="#/components/schemas/Skill"),
+     *       ),
+     *    ),
+     * @OA\Response(
+     *    response=401,
+     *    description="Returns when user is not authenticated",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="Unauthenticated"),
+     *    ),
+     *  ),
+     * )
+     *
+     */
 
     /**
      * Store a newly created resource in storage.
@@ -50,6 +113,33 @@ class SkillController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *  path="api/skills/{id}",
+     *  summary="Get a skill by id",
+     *  description="Get a particular skill by id",
+     *  operationId="skill",
+     *  tags={"Skill"},
+     *
+     * @OA\Response(
+     *     response=200,
+     *     description="Success",
+     * @OA\JsonContent(
+     *       @OA\Property(property="data", type="object", ref="#/components/schemas/Skill"),
+     *       ),
+     *    ),
+     *
+     * @OA\Response(
+     *    response=404,
+     *    description="Returns when resource is not found",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="resource not found"),
+     *    ),
+     *  ),
+     *
+     * )
+     */
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -59,7 +149,9 @@ class SkillController extends Controller
     {
         $skill = Skill::findorfail($id);
 
-        return Response()->json($skill);
+        return Response()->json([
+            'data' => $skill,
+        ]);
     }
 
     /**
@@ -72,6 +164,55 @@ class SkillController extends Controller
     {
         //
     }
+
+    /**
+     * @OA\Patch(
+     *  path="api/skills/{id}",
+     *  summary="Update a skill by its id",
+     *  description="The user about to update a skill must be authenticated",
+     *  operationId="skill",
+     *  tags={"Skill"},
+     *  security={ {"bearer": {} }},
+     *
+     * @OA\RequestBody(
+     *    required=true,
+     *    description="Pass user credentials",
+     *    @OA\JsonContent(
+     *       required={"name","description"},
+     *       @OA\Property(property="name", type="string", example="Marketing"),
+     *       @OA\Property(property="description", type="string", example="Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque accusantium consequuntur molestiae voluptates sit quae eum. Dolore quos quaerat recusandae voluptatem fugiat a iusto ducimus mollitia, reprehenderit similique eligendi cumque."),
+     *    ),
+     * ),
+     *
+     * @OA\Response(
+     *     response=201,
+     *     description="Updated successfully",
+     * @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="updated successfully"),
+     *       @OA\Property(property="data", type="object", ref="#/components/schemas/Skill"),
+     *       ),
+     *    ),
+     *
+     *  @OA\Response(
+     *    response=403,
+     *    description="Returns when user is not authorized to access a resource he is trying to access",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="Access denied"),
+     *    ),
+     *  ),
+     *
+     *
+     * @OA\Response(
+     *    response=401,
+     *    description="Returns when user is not authenticated",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="Unauthenticated"),
+     *    ),
+     *  ),
+     *
+     * )
+     *
+     */
 
     /**
      * Update the specified resource in storage.
@@ -88,9 +229,49 @@ class SkillController extends Controller
 
         return Response()->json([
             'message' => 'Skill successfully updated',
-            'updated' => $skill
+            'data' => $skill
         ]);
     }
+
+    /**
+     * @OA\Delete(
+     *  path="api/skills/{id}",
+     *  summary="Delete a skill by its id",
+     *  description="The user about to delete a skill must be authenticated",
+     *  operationId="skill",
+     *  tags={"Skill"},
+     *  security={ {"bearer": {} }},
+     *
+     *
+     * @OA\Response(
+     *     response=200,
+     *     description="Success",
+     * @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="Deleted successfully"),
+     *       @OA\Property(property="data", type="null"),
+     *       ),
+     *    ),
+     *
+     *  @OA\Response(
+     *    response=403,
+     *    description="Returns when user is not authorized to access a resource",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="Access denied"),
+     *    ),
+     *  ),
+     *
+     *
+     * @OA\Response(
+     *    response=401,
+     *    description="Returns when user is not authenticated",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="Unauthenticated"),
+     *    ),
+     *  ),
+     *
+     * )
+     *
+     */
 
     /**
      * Remove the specified resource from storage.
