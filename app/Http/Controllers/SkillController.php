@@ -66,7 +66,7 @@ class SkillController extends Controller
      *    required=true,
      *    description="Pass data required to set up skill",
      *    @OA\JsonContent(
-     *       required={"name", "description", category_id"},
+     *       required={"name", "description", "category_id"},
      *       @OA\Property(property="name", type="string", example="Graphics Design"),
      *       @OA\Property(property="description", type="string", example="Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque accusantium consequuntur molestiae voluptates sit quae eum. Dolore quos quaerat recusandae voluptatem fugiat a iusto ducimus mollitia, reprehenderit similique eligendi cumque."),
      *       @OA\Property(property="category_id", type="integer", example="4"),
